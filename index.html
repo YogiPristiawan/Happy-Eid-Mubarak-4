@@ -200,6 +200,7 @@
         }
       }
     </style>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
     <img class="corner corner-bl" src="g-b.png" />
@@ -213,7 +214,7 @@
         <h4 class="color1">Happy Eid Al-Fitr</h4>
         <h4 class="color2 margin">1446 H</h4>
 
-        <!-- <p style="margin-bottom: 1.5vh">To: foo</p> -->
+        <!-- <p style="margin-bottom: 1.5vh">To: Foo</p> -->
 
         <p>
           If hands can't shake and our paths can't cross, if words have ever
@@ -243,12 +244,12 @@
       controllist="nodownload"
     ></audio>
     <script>
-      document.getElementById("card").addEventListener("mouseenter", (e) => {
-        const promise = document.getElementById("player").play();
+      window.addEventListener("load", () => {
+        const player = document.getElementById("player");
+        const promise = player.play();
         if (promise !== undefined) {
           promise.catch((error) => {
-            const a = document.getElementById("player");
-            a.setAttribute("controls", true);
+            player.setAttribute("controls", true);
           });
         }
       });
