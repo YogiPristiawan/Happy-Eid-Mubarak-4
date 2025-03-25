@@ -8,6 +8,16 @@
       @import url("https://fonts.googleapis.com/css?family=Amatic+SC");
       @import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@1,500&display=swap");
 
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
       body {
         font-family: "Newsreader", serif, cursive !important;
         background: #fdfaee;
@@ -50,9 +60,15 @@
           inset 300px 0 50px rgba(0, 0, 0, 0.2),
           20px 0 60px rgba(0, 0, 0, 0.2);
         transition: 1.5s;
+        display: none;
+        animation: fade-in 2.7s ease-in;
       }
 
       .card:hover {
+        cursor: pointer;
+      }
+
+      .card-hover:hover {
         transform: translate(-50%, -50%) perspective(2000px) rotate(10deg)
           scale(1.2);
         box-shadow:
@@ -102,11 +118,11 @@
         height: 100%;
       }
 
-      .card:hover .imgBox {
+      .card-hover:hover .imgBox {
         transform: rotateY(-135deg);
       }
 
-      .card:hover .bark {
+      .card-hover:hover .bark {
         opacity: 1;
         transition: 0.6s;
         box-shadow: 200px 150px 50px rgba(0, 0, 0, 0.4) inset;
@@ -185,7 +201,7 @@
           width: 500px;
         }
 
-        .card:hover .bark {
+        .card-hover:hover .bark {
           box-shadow: 300px 200px 100px rgba(0, 0, 0, 0.4) inset;
         }
 
@@ -198,6 +214,41 @@
           line-height: 1.7rem;
           margin: 0.25rem 0;
         }
+      }
+      .play-button {
+        width: 60px;
+        height: 60px;
+        background-color: #f1bd69;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      }
+
+      .play-button::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-left: 15px solid white;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-40%, -50%);
+      }
+
+      /* Efek hover */
+      .play-button:hover {
+        background-color: #f1bd69a1;
+        transform: scale(1.15);
+        transition: all 0.2s ease-in;
       }
     </style>
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -229,29 +280,21 @@
         </p>
       </div>
     </div>
-
-    <iframe
-      src="silence.mp3"
-      allow="autoplay"
-      id="audio"
-      style="display: none"
-    ></iframe>
-    <audio
-      id="player"
-      autoplay
-      loop
-      src="music.mp3"
-      controllist="nodownload"
-    ></audio>
+    <button class="play-button" id="play-button"></button>
+    <audio id="player" loop src="music.mp3" controllist="nodownload"></audio>
     <script>
-      window.addEventListener("load", () => {
-        const player = document.getElementById("player");
-        const promise = player.play();
-        if (promise !== undefined) {
-          promise.catch((error) => {
-            player.setAttribute("controls", true);
-          });
-        }
+      const playButton = document.getElementById("play-button");
+      const player = document.getElementById("player");
+      const card = document.getElementById("card");
+
+      playButton.addEventListener("click", () => {
+        card.style.display = "block";
+        playButton.style.display = "none";
+        player.play();
+      });
+
+      card.addEventListener("click", () => {
+        card.classList.add("card-hover");
       });
     </script>
   </body>
