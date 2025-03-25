@@ -204,7 +204,7 @@
   <body>
     <img class="corner corner-bl" src="g-b.png" />
     <img class="corner corner-br" src="g-b.png" />
-    <div class="card">
+    <div class="card" id="card">
       <div class="imgBox">
         <div class="cover"></div>
         <div class="bark"></div>
@@ -213,9 +213,9 @@
         <h4 class="color1">Happy Eid Al-Fitr</h4>
         <h4 class="color2 margin">1446 H</h4>
 
-        <!-- <p>To: foo</p> -->
-        <!---->
-        <!-- <br /> -->
+        <p>To: foo</p>
+
+        <br />
 
         <p>
           If hands can't shake and our paths can't cross, if words have ever
@@ -231,6 +231,29 @@
       </div>
     </div>
 
-    <audio autoplay loop preload="auto" src="music.mp3"></audio>
+    <iframe
+      src="silence.mp3"
+      allow="autoplay"
+      id="audio"
+      style="display: none"
+    ></iframe>
+    <audio
+      id="player"
+      autoplay
+      loop
+      src="music.mp3"
+      controllist="nodownload"
+    ></audio>
+    <script>
+      document.getElementById("card").addEventListener("mouseenter", (e) => {
+        const promise = document.getElementById("player").play();
+        if (promise !== undefined) {
+          promise.catch((error) => {
+            const a = document.getElementById("player");
+            a.setAttribute("controls", true);
+          });
+        }
+      });
+    </script>
   </body>
 </html>
